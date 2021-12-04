@@ -1,6 +1,11 @@
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Formatter;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by thook on 10/7/15.
@@ -31,6 +36,37 @@ public class HamletParser {
 
         return result.toString();
     }
+
+    public String parser(){
+        String parsedString = "";
+        Pattern pattern = Pattern.compile("(?i)(Hamlet)");
+        Matcher matcher = pattern.matcher(loadFile());
+
+        while(matcher.find()) {
+         parsedString = matcher.replaceAll("Leon");
+        }
+
+        Pattern pattern1 = Pattern.compile("(?i)(Horatio)");
+        Matcher matcher1 = pattern1.matcher(parsedString);
+        while (matcher1.find()){
+
+            parsedString = matcher1.replaceAll("Tariq");
+        }
+
+        return  parsedString;
+    }
+
+
+     public void output() throws FileNotFoundException {
+
+         FileOutputStream outputStream= new FileOutputStream("output.txt");
+         Formatter formatter = new Formatter(outputStream);
+          formatter.format(parser());
+         formatter.flush();
+
+     }
+
+
 
     public String getHamletData(){
         return hamletData;
